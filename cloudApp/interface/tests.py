@@ -2,21 +2,44 @@ from django.test import TestCase
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 import logging
+from .test_utility import test_util
 
 logger = logging.getLogger(__name__)
-
-# Create your tests here.
+USER_NUM = 5
 
 class AuthenticationTest(TestCase):
+
+	random_users = []
+
+	def generate_random_users(self):
+
+		logging.basicConfig()
+		logger.setLevel(logging.INFO)
+		util = test_util()
+
+		for i in xrange(1, USER_NUM):
+			random_user = {}
+			random_user['username'] = util.random_username()
+			random_user['email'] = util.random_email()
+			random_user['password'] = util.random_password(util.random_num_range(8, 12))
+			self.random_users.append(random_user)
+			logger.info("Generated USER with %s, %s, %s", random_user['username'], random_user['email'], random_user['password'])
+
+		logger.info("Random credentials generation completed")
+
 	def setUp(self):
 		"""Creates array of users temporarily for the purpose of testing
 		
 		Returns:
 		    None
 		"""
-		User.objects.create_user('user1', 'user1@iiits.in', 'passwd@*user1')
-		User.objects.create_user('user2', 'user2@iiits.in', 'user2@*passwd')
-		logger.info("Created sample username successfully")
+		self.generate_random_users()
+
+		for user in self.random_users:
+			User.objects.create_user(username=user['username'], password=user['password'], email=user['email'])
+			logger.info("Inserted USER with %s, %s, %s", user['username'], user['email'], user['password'])
+
+		logger.info("Insertion of %d users completed", len(self.random_users))
 
 	def test_check_for_successful_authentication(self):
 		"""Test suite which checks for successful authentication of users 
@@ -24,15 +47,16 @@ class AuthenticationTest(TestCase):
 		Returns:
 		    None
 		"""
-		user = authenticate(username='user1', password='passwd@*user1')
-		self.assertIsNotNone(user)
-		user = authenticate(username='user2', password='user2@*passwd')
-		self.assertIsNotNone(user)
-		
+
+		for user in self.random_users:
+			logger.info("Trying to authenticate %s with password %s", user['username'], user['password'])
+			user = authenticate(username=user['username'], password=user['password'])
+			self.assertIsNotNone(user)
+
 		logger.info("User authentication performed successfully")
 
 	def test_check_for_unsuccessful_authentication(self):
-		"""Sends wrong username/password for check of failed login
+		"""Sends wrong few username/password for check of failed login
 		
 		Returns:
 		    None
@@ -50,10 +74,7 @@ class AuthenticationTest(TestCase):
 		Returns:
 		    None
 		"""
-		user = User.objects.get(username='user1')
-		user.delete()
-
-		user = User.objects.get(username='user2')
-		user.delete()
-
-		logger.info("Removed temporary users")
+		for user in self.random_users:
+			user_handler = User.objects.get(username=user['username'])
+			user_handler.delete()
+			logger.info("Removed %s user with email %s and password %s successfully", user['username'], user['email'], user['password'])
