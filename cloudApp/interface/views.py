@@ -4,6 +4,7 @@ from django.core import serializers
 import time, math
 from .models import Market, Item, LocalMarketData
 from decimal import Decimal
+import logging
 
 # to CSRF exempt 
 from django.views.decorators.csrf import csrf_exempt
@@ -29,6 +30,13 @@ def market_home(request):
 				latitude = request.POST['latitude']
 				longitude = request.POST['longitude']
 				min=10000000
+
+				logger = logging.getLogger(__name__)
+				logging.basicConfig()
+				logger.setLevel(logging.INFO)
+				logger.info(Market.objects.all())
+
+
 				for market in markets:
 					dist = get_dist(float(latitude), float(longitude), float(market.latitude), float(market.longitude))
 					if dist < min:
