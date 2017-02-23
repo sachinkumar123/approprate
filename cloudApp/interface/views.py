@@ -3,23 +3,21 @@ from django.shortcuts import render
 from django.core import serializers
 import time, math
 from .models import Market, Item, LocalMarketData
-
+from decimal import Decimal
 
 # to CSRF exempt 
 from django.views.decorators.csrf import csrf_exempt
 
-
-
 try:
     from django.utils import simplejson as json
-
 except ImportError:
 	import json
+
 def home(request):
 	return HttpResponse("<h1>Home</h1>")
 
 def get_dist(x1,y1,x2,y2):	
-	return pow((pow(x1-x2,2)+pow(y1-y2,2)),0.5)
+	return pow((pow(x1-x2,2)+pow(y1-y2,2)), 0.5)
 
 @csrf_exempt
 def market_home(request):
@@ -27,19 +25,24 @@ def market_home(request):
 	if request.POST:
 		if 'latitude' in request.POST.keys() and 'longitude' in request.POST.keys():
 			if request.POST['latitude'] and request.POST['longitude']:
-				markets = Market.objects.values_list('latitude','longitude')
+				markets = list(Market.objects.all())
 				latitude = request.POST['latitude']
 				longitude = request.POST['longitude']
 				min=10000000
-				#all_markets=list(markets.objects.values(…))
 				for market in markets:
-					dist = get_dist(latitude, longitude, market.latitude, market.longitude)
+					dist = get_dist(float(latitude), float(longitude), float(market.latitude), float(market.longitude))
 					if dist < min:
 						min = dist
 						closest_market = market	
 
-				closest_market=serializers.serialize('json', closest_market)
-				return HttpResponse()
+				#print(closest_market)
+
+				closest_market = json.dumps({'id': closest_market.market_id,
+											'name': closest_market.market_name,
+											'region': closest_market.region,
+											'state': closest_market.state})
+
+				return HttpResponse(closest_market, content_type = 'application/json')
 			else:
 				return HttpResponse("arguments aren't defined")
 		else:
