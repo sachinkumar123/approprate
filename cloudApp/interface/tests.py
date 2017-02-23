@@ -1,8 +1,11 @@
-from django.test import TestCase
+from django.test import TestCase, RequestFactory
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 import logging
 from .test_utility import test_util
+import requests
+from .views import market_home
+import json
 
 logger = logging.getLogger(__name__)
 USER_NUM = 5
@@ -78,3 +81,49 @@ class AuthenticationTest(TestCase):
 			user_handler = User.objects.get(username=user['username'])
 			user_handler.delete()
 			logger.info("Removed %s user with email %s and password %s successfully", user['username'], user['email'], user['password'])
+
+class LocationTest(TestCase):
+
+	def setUp(self):
+		"""Summary
+		
+		Returns:
+		    TYPE: Description
+		"""
+		print("!@#@#")
+		logging.basicConfig()
+		logger.setLevel(logging.INFO)
+		self.factory = RequestFactory()
+		logger.info("Starting location test")
+
+	def test_response(self):
+		"""Summary
+		
+		Returns:
+		    TYPE: Description
+		"""
+		logger.info("Testing for response message for malformed request")
+		request = self.factory.post('/interface/market')
+		response = market_home(request)
+		self.assertTrue(response.text == 'Only POST request is accepted')
+		logger.info("Successfully received \"" + response.text + "\" message.")
+
+	def test_location(self):
+		"""Summary
+		
+		Returns:
+		    TYPE: Description
+		"""
+		logger.info("Testing for correctness in nearest market function by sending location coordinates")
+		request = self.factory.post('/interface/market', data={'latitude': 3, 'longitude': 84})
+		response = market_home(request)
+		json_obj = json.loads(response.text)
+		self.assertTrue(json_obj['name'] == 'Chennai-central')
+		logger.info("Successfully received Chennai-central market for coordinates [3, 84]")
+
+		logger.info("Testing for correctness in nearest market function by sending location coordinates")
+		request = self.factory.post('/interface/market', data={'latitude': 13.5, 'longitude': 80.1})
+		response = market_home(request)
+		json_obj = json.loads(response.text)
+		self.assertTrue(json_obj['name'] == 'Tada')
+		logger.info("Successfully received Tada market for coordinates [13.5, 80.1]")
