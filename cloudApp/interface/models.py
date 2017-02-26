@@ -14,8 +14,8 @@ class Market(models.Model):
         return '%s' % (self.market_name)
 
     market_id = models.AutoField(primary_key=True)
-    market_name = models.TextField(max_length=30, unique=True)
-    region = models.TextField(max_length=30)
+    market_name = models.TextField(max_length=80, unique=True)
+    region = models.TextField(max_length=60)
     state = models.CharField(max_length=2, choices=STATE_CHOICES)
     latitude = models.DecimalField(max_digits=11, decimal_places=8)
     longitude = models.DecimalField(max_digits=11, decimal_places=8)
