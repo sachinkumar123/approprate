@@ -42,6 +42,39 @@ def home(request):
 	return HttpResponse("<h1>Home</h1>")
 
 @csrf_exempt
+def get_market_data_by_name(request):
+    """Summary
+    
+    Args:
+        request (TYPE): Description
+    
+    Returns:
+        TYPE: Description
+    """
+    if request.method == "POST":
+		if 'name' in request.POST.keys():
+			if request.POST['name']:
+				name = request.POST['name']
+				market_data = list(LocalMarketData.objects.filter(market_id__market_name=name))
+
+				market_items = []
+
+				for item in market_data:
+					market_items.append({
+											'item': item.item_id.item_name,
+											'price': item.price
+										})
+
+				market_items = json.dumps(market_items)
+				return HttpResponse(market_items, content_type = 'application/json')
+			else:
+				return HttpResponse("argument name is not defined")
+		else:
+			return HttpResponse("Market name is necessary argument")
+    else:
+		return HttpResponse("Only POST request is accepted")
+
+@csrf_exempt
 def get_regional_markets_having_item(request):
 	"""
 		Returns the list of all markets which are having given item
@@ -55,7 +88,7 @@ def get_regional_markets_having_item(request):
 	Returns:
 	    HttpResponse: Response will be in JSON format containing list of details of Market. If
 	    request is found to be malformed then appropriate response will be sent as error message.
-	    """
+	"""
 	if request.method == "POST":
 		if 'region' in request.POST.keys() and 'item' in request.POST.keys():
 			if request.POST['region'] and request.POST['item']:
@@ -135,7 +168,7 @@ def get_nearby_markets(request):
 	if request.method == "POST":
 		if 'latitude' in request.POST.keys() and 'longitude' in request.POST.keys():
 			if request.POST['latitude'] and request.POST['longitude']:
-				THRESHOLD = 50 #We take radius of 50KM to gather nearby markets
+				THRESHOLD = 20000 #We take radius of 50KM to gather nearby markets
 				markets = list(Market.objects.all())
 				latitude = float(request.POST['latitude'])
 				longitude = float(request.POST['longitude'])
