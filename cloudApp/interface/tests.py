@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 import logging
 from .test_utility import test_util
 import requests
-from .views import market_home
+from .views import get_closest_market
 import json
 from .models import Market
 
@@ -107,7 +107,7 @@ class LocationTest(TestCase):
 		"""
 		logger.info("Testing for response message for malformed request")
 		request = self.factory.post('/interface/market/')
-		response = market_home(request)
+		response = get_closest_market(request)
 		self.assertTrue(response.content == 'Only POST request is accepted')
 		logger.info("Successfully received \"" + response.content + "\" message.")
 
@@ -119,14 +119,14 @@ class LocationTest(TestCase):
 		"""
 		logger.info("Testing for correctness in nearest market function by sending location coordinates")
 		request = self.factory.post('/interface/market/', {'latitude': 3, 'longitude': 84})
-		response = market_home(request)
+		response = get_closest_market(request)
 		json_obj = json.loads(response.content)
 		self.assertTrue(json_obj['name'] == 'Chennai_centrall')
 		logger.info("Successfully received Chennai-central market for coordinates [3, 84]")
 
 		"""logger.info("Testing for correctness in nearest market function by sending location coordinates")
 		request = self.factory.post('/interface/market', {'latitude': 13.5, 'longitude': 80.1})
-		response = market_home(request)
+		response = get_closest_market(request)
 		json_obj = json.loads(response.text)
 		self.assertTrue(json_obj['name'] == 'Chennai_centrall')
 		logger.info("Successfully received Tada market for coordinates [13.5, 80.1]")"""

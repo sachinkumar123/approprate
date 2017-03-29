@@ -39,7 +39,7 @@ def get_distance_between_coordinates(lat1, lat2, long1, long2):
 	return d
 
 def home(request):
-	return HttpResponse("<h1>Home</h1>")
+	return HttpResponse("<h1>Interface Home</h1>")
 
 @csrf_exempt
 def get_market_data_by_name(request):

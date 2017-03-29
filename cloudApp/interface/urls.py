@@ -1,7 +1,5 @@
 from django.conf.urls import url
-from django.contrib import admin
 from . import views
-
 
 urlpatterns = [
     url(r'^$', views.home),
@@ -11,4 +9,3 @@ urlpatterns = [
     url(r'^get_regional_markets_having_item/$', views.get_regional_markets_having_item),
     url(r'^get_market_data_by_name/$', views.get_market_data_by_name),
 ]
-   
