@@ -3,10 +3,10 @@ from .models import Market, LocalMarketData, Item
 
 # Register your models here.
 class MarketModelAdmin(admin.ModelAdmin):
-	list_display=["market_id","market_name","state","latitude","longitude"]
+	list_display=["market_id","market_name","state","latitude","longitude","moderator"]
 	list_display_links=["market_id"]
-	list_editable=["market_name"]
-	list_filter=["state","market_name","region"]
+	list_editable=["market_name","moderator"]
+	list_filter=["state","market_name","region","moderator"]
 	search_fields=["state","region"]
 
 	class Meta:
