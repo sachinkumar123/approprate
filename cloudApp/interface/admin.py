@@ -14,10 +14,10 @@ class MarketModelAdmin(admin.ModelAdmin):
 
 class ItemModelAdmin(admin.ModelAdmin):
 	
-	list_display=["item_name","item_id"]
+	list_display=["item_name","item_id","item_image_url"]
 	list_display_links=["item_id"]
-	list_editable=["item_name"]
-	list_filter=["item_name","item_id"]
+	list_editable=["item_name","item_image_url"]
+	list_filter=["item_name","item_id","item_image_url"]
 	search_fields=["item_name"]
 	class Meta:
 		model=Item

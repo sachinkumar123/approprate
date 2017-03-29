@@ -29,6 +29,7 @@ class Item(models.Model):
 
     item_name = models.CharField(max_length=30, unique=True)
     item_id = models.AutoField(primary_key=True)
+    item_image_url = models.URLField(default='http://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/articles/health_tools/12_powerhouse_vegetables_slideshow/intro_cream_of_crop.jpg')
 
 
 class LocalMarketData(models.Model):
