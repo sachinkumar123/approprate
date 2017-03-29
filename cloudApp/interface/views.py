@@ -232,3 +232,49 @@ def get_closest_market(request):
 
 	else:
 		return HttpResponse("Only POST request is accepted")
+
+@csrf_exempt
+def compare_prices(request):
+	"""
+		Returns the list of all markets which are in vicinity of current location
+	
+	Args:
+	    request (HttpRequest): HTTP Request coming from client's device. Expected to contain
+	    POST request with following parameters -
+	    latitude: Decimal
+	    longitude: Decimal
+	
+	Returns:
+	    HttpResponse: Response will be in JSON format containing list of details of Market. If
+	    request is found to be malformed then appropriate response will be sent as error message.
+	"""
+	if request.method == "POST":
+		if 'latitude' in request.POST.keys() and 'longitude' in request.POST.keys():
+			if request.POST['latitude'] and request.POST['longitude']:
+				THRESHOLD = 20000 #We take radius of 50KM to gather nearby markets
+				markets = list(Market.objects.all())
+				latitude = float(request.POST['latitude'])
+				longitude = float(request.POST['longitude'])
+				markets_list = []
+
+				for market in markets:
+					market_data = list(LocalMarketData.objects.filter(market_id__market_name=market.market_name))
+					market_items = []
+					for item in market_data:
+						market_items.append({
+												'item': item.item_id.item_name,
+												'price': item.price,
+												'item-image': item.item_id.item_image_url
+											})
+					markets_list.append({
+											'market': market.name,
+											'data': market_items
+										})
+				markets_list = json.dumps(markets_list)
+				return HttpResponse(markets_list, content_type = 'application/json')
+			else:
+				return HttpResponse("arguments aren't defined")
+		else:
+			return HttpResponse("latitude and longitude arguments necessary in request")
+	else:
+		return HttpResponse("Only POST request is accepted")
