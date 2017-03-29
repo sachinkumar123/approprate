@@ -62,7 +62,8 @@ def get_market_data_by_name(request):
 				for item in market_data:
 					market_items.append({
 											'item': item.item_id.item_name,
-											'price': item.price
+											'price': item.price,
+											'item-image': item.item_id.item_image_url
 										})
 
 				market_items = json.dumps(market_items)
