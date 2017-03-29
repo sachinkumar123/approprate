@@ -4,7 +4,6 @@ from django.db import models
 from .indian_states import STATE_CHOICES
 from django.contrib.auth.models import User
 
-
 class Market(models.Model):
     """
     Market details, it consists of just Indian states
