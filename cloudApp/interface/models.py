@@ -2,6 +2,8 @@ from __future__ import unicode_literals
 
 from django.db import models
 from .indian_states import STATE_CHOICES
+from django.contrib.auth.models import User
+
 
 class Market(models.Model):
     """
@@ -19,6 +21,7 @@ class Market(models.Model):
     state = models.CharField(max_length=2, choices=STATE_CHOICES)
     latitude = models.DecimalField(max_digits=11, decimal_places=8)
     longitude = models.DecimalField(max_digits=11, decimal_places=8)
+    moderator = models.ForeignKey(User)
 
 class Item(models.Model):
     """
