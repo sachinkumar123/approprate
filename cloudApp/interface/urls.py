@@ -9,4 +9,3 @@ urlpatterns = [
     url(r'^get_regional_markets_having_item/$', views.get_regional_markets_having_item),
     url(r'^get_market_data_by_name/$', views.get_market_data_by_name),
 ]
-   
