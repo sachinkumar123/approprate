@@ -1,14 +1,14 @@
 # Approprate
-#### This app is for helping common people to find genuine rates of vegetables item in the nearby area set by moderators.
+#### Approprate helps clients identify the best rate at which they can buy the vegetables around them.
 
 ## Description
-###### Will be updated soon
-## Running tests
-##### Tests can be run very easily. Below are the commands which need to be run for passing the tests.
-.
-```sh
-$ pip install requirements.txt
-$ cd cloudApp
-$ ./manage.py migrate
-$ ./manage.py test
-```
+###### Approprate was developed as the 6th semester IT System project at IIIT Chittoor, Sri City, in a group of 10. Approprate helps clients identify the best rate at which they can buy the vegetables around them. The project was divided into three subgroups. Three applications were developed as for the project: 'Cloud application', 'Client application (Android)', 'Moderator application (Android)' and each subgroups worked on them independently. API is provided by the Cloud application, which is used by the Client application to show the price of vegetables based upon the nearest mandi or a nearby mandi selected by the user. It makes a comparison based upon all the nearby mandis and help the client figure out where to buy the vegetables from. Moderators are assigned for each location and those moderators can update prices for vegetables in their assigned area using the Moderator application. API to the Moderator application is provided by the Cloud application.
+
+## 'Cloud Application' subgroup:
+###### Abhishek Singh, Abhishek Kumar Prasad, Sachin Kumar
+
+## 'Client application' subgroup:
+###### Raghib Musarrat, Akash Das, Vishal Singh
+
+## 'Moderator application' subgroup:
+###### Chandrakant Ojha, Tushar Maheshwari, Kanv Kumar, Randhir Prakash
