@@ -1,0 +1,2 @@
+This folder contains the basic html pages along with the css files and js files used. The metadata i.e config.xml is attached hereby too.
+The folder was altogether zipped and build into an Android app using Phonegap Build cloud service.

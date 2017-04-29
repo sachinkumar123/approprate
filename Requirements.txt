@@ -1,3 +1,5 @@
+A list of Frameworks/libraries and their version used:
+
 Django==1.10.5
 Faker==0.7.7
 argparse==1.2.1
@@ -9,3 +11,4 @@ python-dateutil==2.6.0
 requests==2.13.0
 six==1.10.0
 wsgiref==0.1.2
+Phonegap== 6.5.0

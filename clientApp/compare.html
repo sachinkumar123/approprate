@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/material-kit.css" rel="stylesheet"/>
+<link href="css/demo.css" rel="stylesheet"/>
+<style>
+ body
+  {
+  color:white;
+  font-size: 1em;
+  background-image: url("img/indexback.jpg");
+  }
+	.display {
+		
+	}
+	.title
+	{/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#b7deed+0,71ceef+50,21b4e2+51,b7deed+100;Shape+1+Style */
+background: #b7deed; /* Old browsers */
+background: -moz-linear-gradient(top,  #b7deed 0%, #71ceef 50%, #21b4e2 51%, #b7deed 100%); /* FF3.6-15 */
+background: -webkit-linear-gradient(top,  #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%); /* Chrome10-25,Safari5.1-6 */
+background: linear-gradient(to bottom,  #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b7deed', endColorstr='#b7deed',GradientType=0 ); /* IE6-9 */
+
+	}
+	#veggies
+	{
+	margin-left:5%;
+	}
+	
+	
+	
+	ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+</style>
+</head>
+<body onload="initiate()">
+<ul>
+ <li><a href="index.html">Home</a></li>
+ <li><a href="location.html">Location</a></li>
+  <li><a href="aroundyou.html">Around you</a></li>
+  <li><a href="compare.html" style="text-decoration:underline">Compare</a></li>
+</ul>
+<p>Hi <span id="username"> User</span>!<br> get these fresh vegetables right now at the best cost in <span id="loc"></span> now: </p>
+<select name="cities" id="citylist" style="color:black" >
+   
+  </select>
+  
+  <select name="veggies" id="veggylist" style="color:black" >
+   
+  </select>
+  
+  <br>
+  <p id="getdetail"></p>
+  <br>
+  <button class="btn btn-warning" style="color:black" onclick="compare()">COMPARE</button>
+<script>  
+var x = document.getElementById("loc");
+var user = document.getElementById("username");
+function initiate()
+{
+  updatenameandloc();
+}
+function updatenameandloc()
+{
+  if(localStorage.user!=undefined)
+  {
+    user.innerHTML=localStorage.user;
+  }
+  else
+  {
+    user.innerHTML="User";
+  }
+  x.innerHTML=localStorage.getItem('location');
+  updateveggies();
+}
+
+function updateveggies()
+{
+  compare_price();
+}
+
+</script>
+<script type="text/javascript">
+var rec;
+var items={name:"Brinjal", loc: localStorage.getItem('location')};
+function compare_price(){
+  var i = 0;
+  $.ajax({
+    url: 'http://146.148.66.171/interface/compare_price/',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+            latitude: localStorage.getItem('latitude'),
+            longitude: localStorage.getItem('longitude'),
+          },
+  })
+  .done(function(result) {
+  //console.log(result);
+  rec=result;
+    if(result.length>0){
+    var w=[];
+	while(i<result.length){
+	
+	 var drop = document.createElement("option");
+    drop.value =result[i]['market'];
+      drop.innerHTML = result[i]['market'];
+      document.getElementById("citylist").appendChild(drop);
+     for(var j=0;j<result[i]['data'].length;j++)
+	 {
+	w.push(result[i]['data'][j]['item']);
+	
+	 }
+	 i++; 
+    }
+	console.log(w.length);
+	w=Array.from(new Set(w));
+	console.log(w.length);
+	for(var j=0;j<w.length;j++)
+	 {
+	 var drop = document.createElement("option");
+    drop.value = w[j];
+      drop.innerHTML = w[j];
+      document.getElementById("veggylist").appendChild(drop);
+    }
+	}
+    if(result.length==0){
+      var div = document.createElement("div")
+      div.style.width = "30em"
+      div.style.height = "10em"
+      var name = document.createElement("p");
+      name.innerHTML = "There are currently no vegetables available at your mandi."
+      div.appendChild(name);
+      document.getElementById("veggies").appendChild(div);
+    }
+  })
+  .fail(function() {
+      console.log("error");
+  })
+}
+function compare()
+{
+console.log(document.getElementById("citylist").value+ "  :  "+document.getElementById("veggylist").value);
+console.log(localStorage.getItem('location'));
+var i=0;
+var price1=0, price2=0;
+while(i<rec.length){
+if(rec[i]['market']==document.getElementById("citylist").value)
+{
+console.log("got ya");
+     for(var j=0;j<rec[i]['data'].length;j++)
+	 {
+	 if(rec[i]['data'][j]['item']==document.getElementById("veggylist").value)
+	 {
+	 price2=rec[i]['data'][j]['price'];
+	 break;
+	 }
+	 }
+}
+if(rec[i]['market']==localStorage.getItem('location'))
+{
+	for(var j=0;j<rec[i]['data'].length;j++)
+	 {
+	 if(rec[i]['data'][j]['item']==document.getElementById("veggylist").value)
+	 {
+	 price1=rec[i]['data'][j]['price'];
+	 break;
+	 }
+	 }
+}
+i++;
+}
+if(price1!=0)
+{
+document.getElementById("getdetail").innerHTML="Price of "+document.getElementById("veggylist").value+" in "+localStorage.getItem("location")+" is "+price1+". ";
+}
+else
+{
+document.getElementById("getdetail").innerHTML="The selected vegetable is not available in your location. ";
+}
+if(price2!=0)
+{
+document.getElementById("getdetail").innerHTML=document.getElementById("getdetail").innerHTML+"Price of "+document.getElementById("veggylist").value+" in "+document.getElementById("citylist").value+ " is "+price2+". ";
+}
+else
+{
+document.getElementById("getdetail").innerHTML=document.getElementById("getdetail").innerHTML+"The selected vegetable is not available in "+ document.getElementById("citylist").value+". ";
+}
+console.log(price1+" , "+price2);
+
+}
+
+</script>
+</body>
+</html>

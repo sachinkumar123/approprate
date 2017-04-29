@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<widget xmlns   = "http://www.w3.org/ns/widgets"
+    xmlns:gap   = "http://phonegap.com/ns/1.0"
+    id          = "com.phonegap.example"
+    versionCode = "10"
+    version     = "1.1.0" >
+<gap:plugin name="cordova-plugin-geolocation" source="npm" />
+<gap:plugin name="cordova-plugin-whitelist" version="1.1.0" source="npm" />
+<access origin="*" launch-external="yes" />
+<allow-intent href="http://*/*" />
+<allow-intent href="https://*/*" />
+
+<feature name="Geolocation">
+    <param name="android-package" value="org.apache.cordova.GeoBroker" />
+</feature>
+<!-- versionCode is optional and Android only -->
+<icon src="icon.png"/>
+  <name>Approprate</name>
+
+  <description>
+     Get your vegetables at reasonable rates now!
+  </description>
+
+  <author href="https://raghibrm.pythonanywhere.com" email="mail@raghibrm.in">
+      RGB
+  </author>
+<access origin="*" /> 
+</widget>
