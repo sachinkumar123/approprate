@@ -1,3 +1,5 @@
+A list of Frameworks/libraries and their version used:
+
 Django==1.10.5
 Faker==0.7.7
 argparse==1.2.1
