@@ -86,14 +86,14 @@ update_price = () => {
     console.log($('#citylist').val(), $('#veggylist').val())
   var i = 0;
   $.ajax({
-    url: 'http://146.148.66.171/interface/compare_price/',
+    url: 'http://146.148.66.171/interface/update_price/',
     type: 'POST',
     dataType: 'json',
     data: {
             latitude: localStorage.getItem('latitude'),
             longitude: localStorage.getItem('longitude'),
             price: pr,
-            city: $('#citylist').val(),
+            market: $('#citylist').val(),
             veg: $('#veggylist').val()
           },
   })
@@ -101,7 +101,7 @@ update_price = () => {
       console.log('succesfully updated')
         console.log(result)
         result[0]['data'][0]['price'] = pr
-    $.post('http://146.148.66.171/interface/compare_price/', result)
+    $.post('http://146.148.66.171/interface/update_price/', result)
   })
   .fail(function() {
       console.log("error");
@@ -133,17 +133,17 @@ function updatenameandloc()
 
 function updateveggies()
 {
-  compare_price();
+  update_price();
 }
 
 </script>
 <script type="text/javascript">
 var rec;
 var items={name:"Brinjal", loc: localStorage.getItem('location')};
-function compare_price(){
+function update_price(){
   var i = 0;
   $.ajax({
-    url: 'http://146.148.66.171/interface/compare_price/',
+    url: 'http://146.148.66.171/interface/update_price/',
     type: 'POST',
     dataType: 'json',
     data: {

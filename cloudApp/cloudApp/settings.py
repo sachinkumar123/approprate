@@ -25,7 +25,7 @@ SECRET_KEY = '_c!q1$e#teh*syy)lyn!lz5v)g$*$ro=n*p2kngel)f@51cij6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['146.148.66.171', 'approprate.tremblerz.me']
+ALLOWED_HOSTS = ['146.148.66.171', 'approprate.tremblerz.me', 'localhost']
 
 
 # Application definition

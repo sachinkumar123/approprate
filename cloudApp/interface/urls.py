@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^get_regional_markets_having_item/$', views.get_regional_markets_having_item),
     url(r'^get_market_data_by_name/$', views.get_market_data_by_name),
     url(r'^compare_price/$', views.compare_prices),
+    url(r'^update_price/$', views.update_price),
 ]

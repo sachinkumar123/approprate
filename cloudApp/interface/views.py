@@ -42,6 +42,34 @@ def home(request):
 	return HttpResponse("<h1>Interface Home</h1>")
 
 @csrf_exempt
+def update_price(request):
+    """Summary
+    
+    Args:
+        request (TYPE): Description
+    
+    Returns:
+        TYPE: Description
+    """
+    if request.method == "POST":
+		if 'market' in request.POST.keys():
+			if request.POST['market']:
+				item_name = request.POST['veg']
+				market_name = request.POST['market']
+				price = request.POST['price']
+				inventory = LocalMarketData.objects.get(market_id__market_name=market_name,
+					item_id__item_name=item_name)
+				inventory.price = price
+				inventory.save()
+				return HttpResponse("successfully updated")
+			else:
+				return HttpResponse("argument name is not defined")
+		else:
+			return HttpResponse("Market name is necessary argument")
+    else:
+		return HttpResponse("Only POST request is accepted")
+
+@csrf_exempt
 def get_market_data_by_name(request):
     """Summary
     
