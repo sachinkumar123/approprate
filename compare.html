@@ -12,26 +12,26 @@
   font-size: 1em;
   background-image: url("img/indexback.jpg");
   }
-  .display {
-    
-  }
-  .title
-  {/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#b7deed+0,71ceef+50,21b4e2+51,b7deed+100;Shape+1+Style */
+	.display {
+		
+	}
+	.title
+	{/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#b7deed+0,71ceef+50,21b4e2+51,b7deed+100;Shape+1+Style */
 background: #b7deed; /* Old browsers */
 background: -moz-linear-gradient(top,  #b7deed 0%, #71ceef 50%, #21b4e2 51%, #b7deed 100%); /* FF3.6-15 */
 background: -webkit-linear-gradient(top,  #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%); /* Chrome10-25,Safari5.1-6 */
 background: linear-gradient(to bottom,  #b7deed 0%,#71ceef 50%,#21b4e2 51%,#b7deed 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b7deed', endColorstr='#b7deed',GradientType=0 ); /* IE6-9 */
 
-  }
-  #veggies
-  {
-  margin-left:5%;
-  }
-  
-  
-  
-  ul {
+	}
+	#veggies
+	{
+	margin-left:5%;
+	}
+	
+	
+	
+	ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -75,8 +75,8 @@ li a:hover {
   <br>
   <p id="getdetail"></p>
   <br>
-  <button class="btn btn-warning" style="color:black" onclick="compare()">COMPARE</button>
-<input type="text" id="up_pr" style="color:#000;"><br>
+  <button class="btn btn-warning" style="color:black" onclick="compare()">COMPARE</button><br>
+    <input type="text" id="up_pr" style="color:#000;"><br>
 <button class="btn btn-warning" onclick="update_price()">Update</button>
 
 <script>
@@ -110,8 +110,6 @@ update_price = () => {
 }
 </script>
 
-
-
 <script>  
 var x = document.getElementById("loc");
 var user = document.getElementById("username");
@@ -135,17 +133,17 @@ function updatenameandloc()
 
 function updateveggies()
 {
-  compare_price();
+  update_price();
 }
 
 </script>
 <script type="text/javascript">
 var rec;
 var items={name:"Brinjal", loc: localStorage.getItem('location')};
-function compare_price(){
+function update_price(){
   var i = 0;
   $.ajax({
-    url: 'http://146.148.66.171/interface/compare_price/',
+    url: 'http://146.148.66.171/interface/update_price/',
     type: 'POST',
     dataType: 'json',
     data: {
@@ -154,34 +152,34 @@ function compare_price(){
           },
   })
   .done(function(result) {
-  //console.log(result);
+  console.log(result);
   rec=result;
     if(result.length>0){
     var w=[];
-  while(i<result.length){
-  
-   var drop = document.createElement("option");
+	while(i<result.length){
+	
+	 var drop = document.createElement("option");
     drop.value =result[i]['market'];
       drop.innerHTML = result[i]['market'];
       document.getElementById("citylist").appendChild(drop);
      for(var j=0;j<result[i]['data'].length;j++)
-   {
-  w.push(result[i]['data'][j]['item']);
-  
-   }
-   i++; 
+	 {
+	w.push(result[i]['data'][j]['item']);
+	
+	 }
+	 i++; 
     }
-  console.log(w.length);
-  w=Array.from(new Set(w));
-  console.log(w.length);
-  for(var j=0;j<w.length;j++)
-   {
-   var drop = document.createElement("option");
+	console.log(w.length);
+	w=Array.from(new Set(w));
+	console.log(w.length);
+	for(var j=0;j<w.length;j++)
+	 {
+	 var drop = document.createElement("option");
     drop.value = w[j];
       drop.innerHTML = w[j];
       document.getElementById("veggylist").appendChild(drop);
     }
-  }
+	}
     if(result.length==0){
       var div = document.createElement("div")
       div.style.width = "30em"
@@ -207,24 +205,24 @@ if(rec[i]['market']==document.getElementById("citylist").value)
 {
 console.log("got ya");
      for(var j=0;j<rec[i]['data'].length;j++)
-   {
-   if(rec[i]['data'][j]['item']==document.getElementById("veggylist").value)
-   {
-   price2=rec[i]['data'][j]['price'];
-   break;
-   }
-   }
+	 {
+	 if(rec[i]['data'][j]['item']==document.getElementById("veggylist").value)
+	 {
+	 price2=rec[i]['data'][j]['price'];
+	 break;
+	 }
+	 }
 }
 if(rec[i]['market']==localStorage.getItem('location'))
 {
-  for(var j=0;j<rec[i]['data'].length;j++)
-   {
-   if(rec[i]['data'][j]['item']==document.getElementById("veggylist").value)
-   {
-   price1=rec[i]['data'][j]['price'];
-   break;
-   }
-   }
+	for(var j=0;j<rec[i]['data'].length;j++)
+	 {
+	 if(rec[i]['data'][j]['item']==document.getElementById("veggylist").value)
+	 {
+	 price1=rec[i]['data'][j]['price'];
+	 break;
+	 }
+	 }
 }
 i++;
 }
