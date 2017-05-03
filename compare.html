@@ -109,6 +109,40 @@ update_price = () => {
 
 }
 </script>
+<input type="text" id="Vegetable" style="color:#000;"><br>
+<input type="text" id="price" style="color:#000;"><br>
+<button class="btn btn-warning" onclick="add_vegetable()">Add vegetable</button>
+
+<script>
+add_vegetable = () => {
+    let v1 = ($(`#Vegetable`).val())
+    let v2 = Number($(`#price`).val())
+    //console.log(`${pr}`)
+    console.log($('#citylist').val(), $('#veggylist').val())
+  var i = 0;
+  $.ajax({
+    url: 'http://146.148.66.171/interface/update_price/',
+    type: 'POST',
+    dataType: 'json',
+    data: {
+            latitude: localStorage.getItem('latitude'),
+            longitude: localStorage.getItem('longitude'),
+            price: v2,
+            new_vegetable: v1,
+            market: $('#citylist').val(),
+            veg: $('#veggylist').val()
+          },
+  })
+  .done( result => {
+      console.log('succesfully updated')
+        console.log(result)
+  })
+  .fail(function() {
+      console.log("error");
+  })
+
+}
+
 
 <script>  
 var x = document.getElementById("loc");
