@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <widget xmlns   = "http://www.w3.org/ns/widgets"
     xmlns:gap   = "http://phonegap.com/ns/1.0"
-    id          = "com.phonegap.aclient"
-    versionCode = "10"
-    version     = "1.1.0" >
+    id          = "com.phonegap.amode"
+    version     = "1.1.2" >
 <gap:plugin name="cordova-plugin-geolocation" source="npm" />
 <gap:plugin name="cordova-plugin-whitelist" version="1.1.0" source="npm" />
 <access origin="*" launch-external="yes" />
@@ -14,15 +13,14 @@
     <param name="android-package" value="org.apache.cordova.GeoBroker" />
 </feature>
 <!-- versionCode is optional and Android only -->
-<icon src="icon.png"/>
-  <name>Approprate</name>
+  <name>A-Moderator</name>
 
   <description>
-     Get your vegetables at reasonable rates now!
+     Update rates for your vegetables now!
   </description>
-
-  <author href="https://raghibrm.pythonanywhere.com" email="mail@raghibrm.in">
+ <author href="https://raghibrm.pythonanywhere.com" email="mail@raghibrm.in">
       RGB
   </author>
+  
 <access origin="*" /> 
 </widget>
