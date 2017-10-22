@@ -16,7 +16,7 @@ Raghib Musarrat, Akash Das, Vishal Singh
 Chandrakant Ojha, Tushar Maheshwari, Kanv Kumar, Randhir Prakash
 
 Our subgroup (comprising of 3 members) worked on the development of the client application. Let us have a look at it.
-![Location Page](attachmentsForReadMe/Location.jpeg ""){:height="50%" width="50%"}
+![Location Page](attachmentsForReadMe/Location.jpeg =250x)
 One can save his mandi from the map (the one nearest to his current location will be saved) or save one of the nearby mandis (in the dropdown the user gets to select one of the mandi around 100 km radius from this location).
 
 ![AroundYou Page](attachmentsForReadMe/AroundYou.jpeg ""){:height="50%" width="50%"}
