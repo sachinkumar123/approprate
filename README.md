@@ -15,6 +15,7 @@ Raghib Musarrat, Akash Das, Vishal Singh
 ## 'Moderator application' subgroup:
 Chandrakant Ojha, Tushar Maheshwari, Kanv Kumar, Randhir Prakash
 
+## THE CLENT APPLICATION
 Our subgroup (comprising of 3 members) worked on the development of the client application. Let us have a look at it.
 
 ![Location Page](attachmentsForReadMe/Location.jpeg "" )
